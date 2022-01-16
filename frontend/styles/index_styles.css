@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'Windows 95';
+    src: url('../fonts/w-95-sans-serif.woff2') format('woff2'),
+        url('../fonts/w-95-sans-serif.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-image: url("../assets/background_1.png");
+}
+
+.title {
+    margin-top: 2em;
+    margin-bottom: 3em;
+    text-align: center;
+}
+
+.about {
+    background-image: url("../assets/text_background.png");
+    text-align:justify;
+}
+
+.about p {
+    padding: 1em;
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+.previous_button{
+    background-color: #F2789F;
+    padding: 0.5em;
+}
+
+.previous_button:hover{
+    background-color: #f54f84;
+}
+
+.submit_button{
+    background-color: #F2789F;
+    padding: 0.5em;
+}
+
+.submit_button:hover{
+    background-color: #f54f84;
+}
+
+.btn-text{
+    font-family: 'Windows 95';
+    font-size: 1.1vw;
+}
+
+
+.buttons {
+    margin-top: 5rem;
+}
+
+.gogocat{
+    position: fixed;
+    height: auto; 
+    width: auto; 
+    max-width: 55px; 
+    max-height: 55px;
+    right: 0px;
+    bottom: 0px;
+}
+
+
