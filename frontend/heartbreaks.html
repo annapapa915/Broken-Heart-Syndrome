@@ -14,14 +14,19 @@
 
 <body>
     <div id="stories"></div>
-    <div class="buttons container">
+    <div class="mt-5 mb-4 buttons container">
         <div class="row justify-content-center ">
-            <div class="col-4 text-center">
+            <div class="col-1 text-center">
                  <button id="prev" onclick="previousPage()" type="button" class="previous_page">
                      <span class="btn-text mb-4"> <- </span>
                  </button>
             </div>
-            <div class="col-4 text-center">
+            <div class="col-1 text-center">
+                <button disabled type="button" class="current_page">
+                    <span id="current"  class="btn-text mb-4">  </span>
+                </button>
+           </div>
+        <div class="col-1 text-center">
                  <button id="next" onclick="nextPage()" type="button" class="next_page">
                      <span class="btn-text mb-4"> -> </span>
                  </button>

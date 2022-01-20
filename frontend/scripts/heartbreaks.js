@@ -27,19 +27,27 @@ function getStories(number) {
         .then(res => res.json())
         .then(data => {
             const storiesContainer = document.getElementById("stories") 
+            if (data.isLast) {
+                document.getElementById('next').style.visibility ='hidden';
+            }
+            else{
+                document.getElementById('next').style.visibility ='visible';
+            }
+
+            var paragraph = document.getElementById("current");
+            paragraph.innerText=pageNumber+1;
 
             while (storiesContainer.firstChild) {
                 storiesContainer.removeChild(storiesContainer.lastChild);
             }
 
-            for (i=0; i<data.length; i++)
-                addStory(storiesContainer, data[i]);
+            for (i=0; i<data.stories.length; i++)
+                addStory(storiesContainer, data.stories[i]);
         })
         .catch(err => console.error(err))
 }
 
 function addStory(storiesContainer, story) {
-    console.log(storiesContainer)
     if(storiesContainer.lastChild == null || storiesContainer.lastChild.lastChild.childNodes.length === 4) {
         // Create row div
         const rowContainer = document.createElement("div")

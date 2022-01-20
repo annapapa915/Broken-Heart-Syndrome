@@ -21,19 +21,34 @@ app.post("/form", bodyParser.json(), (req, res) => {
 
 app.get("/heartbreaks", (req, res) => {
     let sql = 'SELECT * FROM posts ORDER BY date DESC LIMIT ? OFFSET ?';
+    let sql1 = 'SELECT COUNT(id) AS count FROM posts';
     const Stories = [];
+    const pageOffset = parseInt(req.query.pageNum, 10) * PostsPerPage;
+    let lastpagenumber=0;
 
-    db.all(sql, [PostsPerPage, req.query.pageNum * PostsPerPage], (err, rows) => {
-         if (err) {
-              throw err;
-        }
-        rows.forEach((row) => {
-            console.log(row);
-            Stories.push(row);
+
+    db.all(sql, [PostsPerPage, pageOffset], (err, rows) => {
+        if (err) throw err;
+        
+        db.get(sql1, [], (err, row) => {
+            if (err) throw err;
+
+            if (row.count%PostsPerPage>0) lastpagenumber++;     
+            
+            lastpagenumber = lastpagenumber + Math.floor(row.count/PostsPerPage);
+            const isLast = lastpagenumber === parseInt(req.query.pageNum, 10) + 1;
+
+            rows.forEach(row => {
+                Stories.push(row);
+            });
+
+            res.json({
+                isLast,
+                stories: Stories
+            });    
         });
-
-        res.json(Stories);    
     });
+
 })
 
 app.use(express.static('frontend'))
