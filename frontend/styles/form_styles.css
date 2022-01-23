@@ -33,7 +33,7 @@ body {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     font-family: 'Windows 95';
-    font-size: 1.1vw;
+    font-size: 0.9vw;
     text-align: center;
     margin: auto;
     width: 15%;
@@ -42,6 +42,12 @@ body {
 
 .goback{
     margin-bottom: 3em;
+}
+
+#warning{
+    font-family: 'Windows 95';
+    font-size: 0.7vw;
+    padding: 0.5em;
 }
 
 #btn-submit{

@@ -1,5 +1,9 @@
+require('dotenv').config()
+require('isomorphic-fetch')
+const { json } = require('body-parser');
 const bodyParser = require('body-parser')
 const express = require('express')
+const qs = require("querystring");
 
 const app = express()
 const port = 8080
@@ -11,12 +15,52 @@ const PostsPerPage = 3;
 db.run("CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, nickname TEXT, story TEXT, date TEXT)");
 
 app.post("/form", bodyParser.json(), (req, res) => {
-    db.serialize(function() {
-        var stmt = db.prepare("INSERT INTO posts(nickname, story, date) VALUES(?,?,?)")
-        stmt.run(req.body.nickname, req.body.story, new Date(Date.now()).toISOString())
-        stmt.finalize()
-    })
-    res.sendStatus(200)
+    if (req.body.recaptchaToken == null) {
+        res.sendStatus(400);
+        return;
+    }
+
+    const body = {
+        secret: process.env.CAPTCHA_SECRET,
+        response: req.body.recaptchaToken
+    }
+
+    fetch("https://www.google.com/recaptcha/api/siteverify?" + qs.stringify(body))
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if(!data.success) {
+                res.sendStatus(403);
+                return;
+            }
+
+            if (req.body.nickname==null || req.body.story==null)
+            {
+                res.sendStatus(400);
+                return;
+            }
+
+            if (req.body.nickname.length>15 || req.body.nickname.length<4){
+                res.sendStatus(403);
+                return;
+            }
+
+            if (req.body.story.length>800 || req.body.story.length<40){
+                res.sendStatus(403);
+                return;
+            }
+
+            db.serialize(function() {
+                var stmt = db.prepare("INSERT INTO posts(nickname, story, date) VALUES(?,?,?)");
+                stmt.run(req.body.nickname, req.body.story, new Date(Date.now()).toISOString());
+                stmt.finalize();
+            })
+            res.sendStatus(200);
+        })
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500)
+        })
 })
 
 app.get("/heartbreaks", (req, res) => {
