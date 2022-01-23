@@ -70,6 +70,18 @@ function addStory(storiesContainer, story) {
     }
 }
 
+var btn = document.getElementById("btn-homepage");
+
+btn.addEventListener("mouseover", function() {
+    document.getElementById("btn-homepage").style.backgroundImage = "url(../assets/message_animation.gif)";
+});
+
+btn.addEventListener("mouseout", function() {
+    document.getElementById("btn-homepage").style.backgroundImage = "url(../assets/message.png)";
+});
+
+
+
 
 function appendStory(container, story) {
 

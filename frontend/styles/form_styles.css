@@ -13,10 +13,7 @@ body {
 .form{
     background-image: url("../assets/text_background2.png") ;
     background-repeat: no-repeat;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    background-size: 100% 100%;
     margin: 2em;
     padding: 1em;
 }
@@ -32,7 +29,9 @@ body {
 }
 
 .title{
-    background-color: white;
+    background-image: url("../assets/text_background3.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     font-family: 'Windows 95';
     font-size: 1.1vw;
     text-align: center;
@@ -40,3 +39,20 @@ body {
     width: 15%;
     padding: 0.5em;
 }
+
+.goback{
+    margin-bottom: 3em;
+}
+
+#btn-submit{
+    font-family: 'Windows 95';
+    font-size: 0.8vw;
+    padding: 0.5em;
+}
+
+#btn-homepage{
+    padding: 20px 15px 15px 32px;
+    background: #e9e9e9 url("../assets/message.png") 2px 2px no-repeat;
+}
+
+

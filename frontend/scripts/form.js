@@ -21,3 +21,16 @@ document.getElementById('btn-submit').addEventListener("click", function() {
     .catch(err => console.error(err))
 }); 
 
+
+var btn = document.getElementById("btn-homepage");
+
+btn.addEventListener("mouseover", function() {
+    document.getElementById("btn-homepage").style.backgroundImage = "url(../assets/message_animation.gif)";
+});
+
+btn.addEventListener("mouseout", function() {
+    document.getElementById("btn-homepage").style.backgroundImage = "url(../assets/message.png)";
+});
+
+
+
