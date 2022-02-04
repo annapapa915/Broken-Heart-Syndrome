@@ -1,14 +1,25 @@
 window.onload = main;
 let pageNumber = 0;
+let sort = "new";
 
 function main() {
     document.getElementById('prev').style.visibility ='hidden';
     getStories(pageNumber);
 }
 
+function onSortClick(btn) {
+    if(btn.id === sort) return;
+
+    document.getElementById(sort).classList.remove("pressed");
+    btn.classList.add("pressed");
+    sort = btn.id;
+
+    getStories(pageNumber, sort)
+}
+
 function nextPage(){
     pageNumber = pageNumber + 1;
-    getStories(pageNumber);
+    getStories(pageNumber, sort);
     document.getElementById('prev').style.visibility ='visible';
 }
 
@@ -19,11 +30,13 @@ function previousPage(){
     }
     
     pageNumber = pageNumber - 1;
-    getStories(pageNumber);
+    getStories(pageNumber, sort);
 }
 
-function getStories(number) {
-    fetch("/heartbreaks?pageNum=" + number)
+function getStories(number, orderBy) {
+    if(orderBy == null) orderBy = "new";
+
+    fetch(`/heartbreaks?pageNum=${number}&sortBy=${orderBy}`)
         .then(res => res.json())
         .then(data => {
             const storiesContainer = document.getElementById("stories") 
@@ -82,8 +95,11 @@ btn.addEventListener("mouseout", function() {
 
 
 
-
 function appendStory(container, story) {
+
+    const date = document.createElement('p');
+    const storyDate = story.date;
+    date.appendChild(document.createTextNode(storyDate.substring(0, 10)));
 
     const elem = document.createElement('p');
     elem.appendChild(document.createTextNode(story.story));
@@ -92,10 +108,52 @@ function appendStory(container, story) {
     nickname.appendChild(document.createTextNode('-' + story.nickname));
     nickname.style.color = "rgb(94,94,94)";
 
+    var img = document.createElement("img");
+    img.style.width = '50px';
+    img.style.height = '40px';
+    img.classList.add('emoji');
+
+    let heart_emoji = "/assets/filled_heart_emoji.png"
+    if (localStorage.getItem(story.id) === null) {
+        heart_emoji = "assets/empty_heart_emoji.png";
+
+        img.addEventListener("click", function(e) {
+            fetch("/likes?id=" + story.id, { method: "POST" })
+                .then(res => {
+                    if (!res.ok) throw new Error(res);
+
+                    localStorage.setItem(story.id, 'true');
+
+                    story.likes++;
+                    numoflikes.replaceChild(document.createTextNode(story.likes + ' hearts'), numoflikes.childNodes[0])
+                    
+                    e.target.src = "/assets/filled_heart_emoji.png";
+                    e.target.removeEventListener('click', arguments.callee)
+
+                })
+                .catch(err => console.error(err))
+        });
+    }
+
+    img.src = heart_emoji;
+    const like_emoji = document.createElement('div');
+    like_emoji.appendChild(img);
+
+    const statistics = document.createElement('div');
+    const numoflikes = document.createElement('p');
+    numoflikes.appendChild(document.createTextNode(story.likes + ' hearts'));
+    numoflikes.classList.add('counter');
+
+    statistics.classList.add('d-flex','justify-content-between');
+    statistics.appendChild(like_emoji);
+    statistics.appendChild(numoflikes);
+  
     const nested = document.createElement("div");
     nested.classList.add('card-text','story');
+    nested.appendChild(date);
     nested.appendChild(elem);
     nested.appendChild(nickname);
+    nested.appendChild(statistics);
 
     const nested2 = document.createElement("div");
     nested2.classList.add('card', 'bg-transparent', 'border-0');
@@ -112,3 +170,4 @@ function appendStory(container, story) {
 
     container.appendChild(nested4);
 }
+

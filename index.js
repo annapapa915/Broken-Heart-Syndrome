@@ -12,7 +12,7 @@ var db = new sqlite3.Database('forms.db');
 
 const PostsPerPage = 3;
 
-db.run("CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, nickname TEXT, story TEXT, date TEXT)");
+db.run("CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, nickname TEXT, story TEXT, date TEXT, likes UNSIGNED BIG INT)");
 
 app.post("/form", bodyParser.json(), (req, res) => {
     if (req.body.recaptchaToken == null) {
@@ -28,7 +28,6 @@ app.post("/form", bodyParser.json(), (req, res) => {
     fetch("https://www.google.com/recaptcha/api/siteverify?" + qs.stringify(body))
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             if(!data.success) {
                 res.sendStatus(403);
                 return;
@@ -51,8 +50,8 @@ app.post("/form", bodyParser.json(), (req, res) => {
             }
 
             db.serialize(function() {
-                var stmt = db.prepare("INSERT INTO posts(nickname, story, date) VALUES(?,?,?)");
-                stmt.run(req.body.nickname, req.body.story, new Date(Date.now()).toISOString());
+                var stmt = db.prepare("INSERT INTO posts(nickname, story, date, likes) VALUES(?,?,?,?)");
+                stmt.run(req.body.nickname, req.body.story, new Date(Date.now()).toISOString(), 0);
                 stmt.finalize();
             })
             res.sendStatus(200);
@@ -63,13 +62,26 @@ app.post("/form", bodyParser.json(), (req, res) => {
         })
 })
 
+
 app.get("/heartbreaks", (req, res) => {
-    let sql = 'SELECT * FROM posts ORDER BY date DESC LIMIT ? OFFSET ?';
     let sql1 = 'SELECT COUNT(id) AS count FROM posts';
     const Stories = [];
     const pageOffset = parseInt(req.query.pageNum, 10) * PostsPerPage;
     let lastpagenumber=0;
 
+    let sql;
+    switch(req.query.sortBy) {
+        case "old":
+            sql = 'SELECT * FROM posts ORDER BY date ASC LIMIT ? OFFSET ?';
+            break;
+        case "new":
+        case null:
+            sql = 'SELECT * FROM posts ORDER BY date DESC LIMIT ? OFFSET ?';
+            break;
+        case "likes":
+            sql = 'SELECT * FROM posts ORDER BY likes DESC LIMIT ? OFFSET ?';
+            break;
+    }
 
     db.all(sql, [PostsPerPage, pageOffset], (err, rows) => {
         if (err) throw err;
@@ -91,6 +103,24 @@ app.get("/heartbreaks", (req, res) => {
                 stories: Stories
             });    
         });
+    });
+
+})
+
+app.post("/likes",(req,res)=>
+{
+    if (req.query.id==null){
+        res.sendStatus(400);
+        return;
+    }
+
+    
+    let id = req.query.id;
+    let sql = 'UPDATE posts SET likes = likes + 1 WHERE id=?';
+
+    db.run(sql, [id], (err, rows) => {
+        if (err) throw err;
+        res.sendStatus(200);
     });
 
 })

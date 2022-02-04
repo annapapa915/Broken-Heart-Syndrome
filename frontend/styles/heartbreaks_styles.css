@@ -34,6 +34,34 @@ body {
     margin-bottom: 4em;
 }
 
+.pressed {
+    color: #000;
+    background-color: #c0c0c0;
+    border-color: #c0c0c0;
+    box-sizing: border-box;
+}
+
+p.counter{
+    font-size: 0.65em;
+    color: grey;
+}
+
+.emoji:hover{
+    cursor: pointer;
+}
+
+#sort{
+    font-family: 'Windows 95';
+    position:absolute; top:0; left:0;
+    font-size: 0.8em;
+}
+
+#sort_text{
+    background-color: #e9e9e9;
+    padding: 0.5em;
+}
+
+
 #btn-homepage{
     position:absolute; top:0; right:0;
     padding: 20px 15px 15px 32px;
@@ -42,19 +70,20 @@ body {
 
 #prev{
     font-family: 'Windows 95';
-    font-size: 0.7vw;
+    font-size: 0.7em;
     padding: 0.5em;
 
 }
 
 #next{
     font-family: 'Windows 95';
-    font-size: 0.7vw;
+    font-size: 0.7em;
     padding: 0.5em;
 }
 
 #current{
     font-family: 'Windows 95';
-    font-size: 0.8vw;
+    font-size: 0.7em;
     padding: 0.5em;
 }
+

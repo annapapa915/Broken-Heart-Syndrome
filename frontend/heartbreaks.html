@@ -13,28 +13,39 @@
 
 
 <body>
-    <div class="goback">
-        <button id="btn-homepage" onclick="window.location.href='index.html'" type="button">
-        </button>
+    <div class="topofpage">
+         <div class="goback">
+             <button id="btn-homepage" onclick="window.location.href='index.html'" type="button">
+              </button>
+        </div>
+        <div class="sorting">
+            <div id='sort'class="d-flex justify-content-start">
+                <span id='sort_text'>Sort by: </span>
+                <button onclick="onSortClick(this)" class="pressed" id="new" type="button">
+                    <span class="btn-text mb-1"> Latest </span>
+                </button>
+                <button onclick="onSortClick(this)" id="old" type="button">
+                    <span class="btn-text mb-4"> Oldest </span>
+                </button>
+                <button onclick="onSortClick(this)" id="likes" type="button">
+                    <span class="btn-text mb-4"> Hearts </span>
+                </button>
+            </div>
+       </div>
     </div>
     <div id="stories"></div>
-    <div class="mt-5 mb-4 buttons container">
-        <div class="row justify-content-center ">
-            <div class="col-1 text-center">
-                 <button id="prev" onclick="previousPage()" type="button" class="previous_page">
-                     <span class="btn-text mb-4"> <- </span>
-                 </button>
-            </div>
-            <div class="col-1 text-center">
-                <button disabled type="button" class="current_page">
+    <div class="d-flex justify-content-center mt-5">
+
+            <button id="prev" onclick="previousPage()" type="button" class="previous_page">
+                     <span class="btn-text mb-4"><-</span>
+            </button>
+
+            <button disabled type="button" class="current_page">
                     <span id="current"  class="btn-text mb-4">  </span>
-                </button>
-           </div>
-        <div class="col-1 text-center">
-                 <button id="next" onclick="nextPage()" type="button" class="next_page">
-                     <span class="btn-text mb-4"> -> </span>
-                 </button>
-            </div>
-        </div>
-     </div>
+            </button>
+
+            <button id="next" onclick="nextPage()" type="button" class="next_page">
+                     <span class="btn-text mb-4">-></span>
+            </button>
+    </div>
 </body>

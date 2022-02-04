@@ -11,34 +11,73 @@ body {
 }
 
 .form{
-    background-image: url("../assets/text_background2.png") ;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-color: rgb(255, 235, 240);
+    border-style: outset;
+    border-color: rgb(185, 185, 185);
     margin: 2em;
     padding: 1em;
 }
 
 .nickname{
     font-family: 'Windows 95';
-    font-size: 0.9vw;
+    font-size: 0.8em;
 }
 
 .story{
     font-family: 'Windows 95';
-    font-size: 0.9vw;
+    font-size: 0.8em;
 }
 
 .title{
-    background-image: url("../assets/text_background3.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-color: rgb(255, 235, 240);
+    border-style: outset;
+    border-color: rgb(185, 185, 185);
     font-family: 'Windows 95';
-    font-size: 0.9vw;
+    font-size: 1em;
     text-align: center;
     margin: auto;
     width: 15%;
     padding: 0.5em;
 }
+
+.submition{
+    font-family: 'Windows 95';
+    font-size: 0.8em;
+    padding: 0.5em;
+}
+
+
+@media only screen and (max-width: 767px) {
+
+    .title{
+        font-family: 'Windows 95';
+        font-size: 0.40em;
+        text-align: center;
+        margin: auto;
+        width: 15%;
+        padding: 0.5em;
+    }
+
+    
+    .nickname{
+      font-family: 'Windows 95';
+     font-size: 0.4em;
+    }
+
+    .story{
+        font-family: 'Windows 95';
+        font-size: 0.4em;
+    }
+
+    
+    .submition{
+        font-family: 'Windows 95';
+        font-size: 0.4em;
+        padding: 0.5em;
+    }
+
+
+ }
 
 .goback{
     margin-bottom: 3em;
@@ -46,15 +85,10 @@ body {
 
 #warning{
     font-family: 'Windows 95';
-    font-size: 0.7vw;
+    font-size: 0.7em;
     padding: 0.5em;
 }
 
-#btn-submit{
-    font-family: 'Windows 95';
-    font-size: 0.8vw;
-    padding: 0.5em;
-}
 
 #btn-homepage{
     padding: 20px 15px 15px 32px;
