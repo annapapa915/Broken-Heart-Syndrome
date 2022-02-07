@@ -1,8 +1,11 @@
+// Function that handles submission button of forms
 document.getElementById('btn-submit').addEventListener("click", function() {
     var nick_txt = document.getElementById('default').value;
     var story_txt = document.getElementById('textarea').value;
     var warning_text =  document.getElementById('warning');
 
+    // Displays warnings in case the character limits are not followed by the user
+    // Makes sure the nickname is correct first and then displays subsequent warnings for stories
     if (warning_text.childNodes.length>0)
         warning_text.removeChild(warning_text.childNodes[0]);
 
@@ -16,7 +19,7 @@ document.getElementById('btn-submit').addEventListener("click", function() {
         return;
     }
 
-
+    // Handles captcha received after pressing the submission button 
     grecaptcha.ready(function() {
         grecaptcha.execute('6Le5hjEeAAAAABoD-nVFZUMomZJGTGVtQs_WPB1v', {action: 'submit'}).then(function(token) {
             const body = JSON.stringify({
@@ -35,6 +38,8 @@ document.getElementById('btn-submit').addEventListener("click", function() {
                     console.error(res)
                     return;
                 }
+
+                // Redirects to index page
                 window.location.href = "/";
             })
             .catch(err => console.error(err))
@@ -42,16 +47,13 @@ document.getElementById('btn-submit').addEventListener("click", function() {
     });
 }); 
 
-
-var btn = document.getElementById("btn-homepage");
+// Functions that handle button returning to homepage
+const btn = document.getElementById("btn-homepage");
 
 btn.addEventListener("mouseover", function() {
-    document.getElementById("btn-homepage").style.backgroundImage = "url(../assets/message_animation.gif)";
+    btn.style.backgroundImage = "url(../assets/message_animation.gif)";
 });
 
 btn.addEventListener("mouseout", function() {
-    document.getElementById("btn-homepage").style.backgroundImage = "url(../assets/message.png)";
+    btn.style.backgroundImage = "url(../assets/message.png)";
 });
-
-
-
