@@ -8,7 +8,7 @@ const qs = require("querystring");
 
 const app = express();
 // If port in environmental variable not found, then switch to port 8080
-const port = process.env.PORT || 8080;
+const port =parseInt(process.env.PORT, 10) || 8080;
 const sqlite3 = require('sqlite3').verbose();
 // Database containing stories posted by users
 const db = new sqlite3.Database('forms.db');
