@@ -11,7 +11,7 @@ const app = express();
 const port =parseInt(process.env.PORT, 10) || 8080;
 const sqlite3 = require('sqlite3').verbose();
 // Database containing stories posted by users
-const db = new sqlite3.Database('forms.db');
+const db = new sqlite3.Database(process.env.DB);
 
 // Variable that shows the number of posts shown per page in heartbreaks.html
 const PostsPerPage = 3;
