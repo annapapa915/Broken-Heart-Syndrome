@@ -1,25 +1,33 @@
 {
   "name": "brokenheartsyndrome",
   "version": "1.0.0",
-  "description": "",
+  "description": "Broken heart syndrome",
   "main": "index.js",
-  "engines": {
-     "node": "14.x" 
-  },
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
-  },
-  "author": "",
   "dependencies": {
     "body-parser": "^1.19.1",
-    "dateformat": "^5.0.2",
-    "dotenv": "^14.2.0",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "isomorphic-fetch": "^3.0.0",
     "sqlite3": "^5.0.2"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  }
+  "devDependencies": {},
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annapapa915/brokenheartsyndrome.git"
+  },
+  "keywords": [
+    "broken"
+  ],
+  "author": "Anna Papadopoulou",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/annapapa915/brokenheartsyndrome/issues"
+  },
+  "homepage": "https://github.com/annapapa915/brokenheartsyndrome#readme"
 }
