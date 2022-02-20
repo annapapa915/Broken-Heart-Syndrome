@@ -1,5 +1,7 @@
 # Broken-Heart-Syndrome
 
+![This is an image](./homepage_screenshot.PNG)
+
 A nostalgia 2000s-inspired website created to post stories. Users can either view older posts or submit new ones. 
 There is an integrated like system for posts as well as sorting options. The site can be visited [here](https://brokenheartsyndro.me/).
 
