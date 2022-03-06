@@ -74,13 +74,13 @@ app.post("/form", bodyParser.json(), captchaMiddleware, (req, res) => {
     const forbidden_words = process.env.FORBIDDEN.split(',');
     for (const word of forbidden_words)
     {
-        if (req.body.nickname.includes(word))
+        if (req.body.nickname.toLowerCase().includes(word))
         {
             res.sendStatus(406);
             return;
         }
 
-        if (req.body.story.includes(word))
+        if (req.body.story.toLowerCase().includes(word))
         {
             res.sendStatus(406);
             return;
