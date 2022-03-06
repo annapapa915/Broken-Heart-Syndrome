@@ -124,23 +124,32 @@ function appendStory(container, story) {
         heart_emoji = "assets/empty_heart_emoji.png";
 
         img.addEventListener("click", function(e) {
-            fetch("/likes?id=" + story.id, { method: "POST" })
-                .then(res => {
-                    if (!res.ok) throw new Error(res);
+            img.src = "assets/heart_animation.gif"
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6Le5hjEeAAAAABoD-nVFZUMomZJGTGVtQs_WPB1v', {action: 'submit'}).then(function(token) {
+                    fetch("/likes?id=" + story.id, { 
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({recaptchaToken: token})
+                    })
+                    .then(res => {
+                        if (!res.ok) throw new Error(res);
 
-                    // works like a hashtable ;)
-                    localStorage.setItem(story.id, 'true');
+                        // works like a hashtable ;)
+                        localStorage.setItem(story.id, 'true');
 
-                    story.likes++;
-                    // shows the number of likes each story has
-                    numoflikes.replaceChild(document.createTextNode(story.likes + ' hearts'), numoflikes.childNodes[0])
-                    
-                    e.target.src = "/assets/filled_heart_emoji.png";
-                    // disables the button once the user has pressed like
-                    e.target.removeEventListener('click', arguments.callee)
+                        story.likes++;
+                        // shows the number of likes each story has
+                        numoflikes.replaceChild(document.createTextNode(story.likes + ' hearts'), numoflikes.childNodes[0])
+                        
+                        e.target.src = "/assets/filled_heart_emoji.png";
+                        // disables the button once the user has pressed like
+                        e.target.removeEventListener('click', arguments.callee)
 
-                })
-                .catch(err => console.error(err))
+                    })
+                    .catch(err => console.error(err))
+                });
+            });
         });
     }
 
