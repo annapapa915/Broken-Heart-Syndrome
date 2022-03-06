@@ -1,6 +1,5 @@
 require('dotenv').config();
 require('isomorphic-fetch');
-const { json } = require('body-parser');
 const bodyParser = require('body-parser');
 // Easy server creator
 const express = require('express');
@@ -141,7 +140,7 @@ app.get("/heartbreaks", (req, res) => {
 })
 
 // Handles like system for stories
-app.post("/likes",(req,res) => {
+app.post("/likes", bodyParser.json(), captchaMiddleware, (req,res) => {
 
     if (req.query.id==null){
         res.sendStatus(400);
