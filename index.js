@@ -70,6 +70,23 @@ app.post("/form", bodyParser.json(), captchaMiddleware, (req, res) => {
         return;
     }
 
+    // check story and nickname for forbidden words
+    const forbidden_words = process.env.FORBIDDEN.split(',');
+    for (const word of forbidden_words)
+    {
+        if (req.body.nickname.includes(word))
+        {
+            res.sendStatus(406);
+            return;
+        }
+
+        if (req.body.story.includes(word))
+        {
+            res.sendStatus(406);
+            return;
+        }
+    }
+   
     // Makes sure the commands written for database do not run at the same time
     db.serialize(function(){
         var stmt = db.prepare("INSERT INTO posts(nickname, story, date, likes) VALUES(?,?,?,?)");

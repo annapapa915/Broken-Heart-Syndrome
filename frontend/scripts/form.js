@@ -35,6 +35,8 @@ document.getElementById('btn-submit').addEventListener("click", function() {
             })
             .then(res => {
                 if(!res.ok) {
+                    if (res.status==406)
+                        warning_text.appendChild(document.createTextNode('⚠️Slurs are not tolerated here!'));
                     console.error(res)
                     return;
                 }
